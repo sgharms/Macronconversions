@@ -1,8 +1,8 @@
 module Text
-  module Latex
+  module LatTeX
     module Util
       module Macronconversions
-        VERSION = "0.0.1"
+        
       end
     end
   end

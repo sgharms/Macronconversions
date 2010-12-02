@@ -4,12 +4,12 @@ require "macronconversions/version"
 
 Gem::Specification.new do |s|
   s.name        = "macronconversions"
-  s.version     = Macronconversions::VERSION
+  s.version     = Text::Latex::Util::Macronconversions::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Steven G. Harms"]
   s.email       = ["macron_conversions@sgharms.oib.com"]
   s.homepage    = "http://rubygems.org/gems/macronconversions"
-  s.summary     = %q{Convert strings with LaTeX-style macron notation to
+  s.summary     = %q{Convert strings with Latex-style macron notation to
   strings with embedded high-byte characters or UTF-8 escape codes.}
   s.description = %q{Convert strings like 'laud\={a}re' to 'laudāre' using
   ASCII-compatible escape codes.}
