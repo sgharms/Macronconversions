@@ -19,8 +19,8 @@ macron-characters into LaTeX-style, use the latter.
 
   # Basic conversion and advanced conversion
 
-  puts MacronConversions::MacronConverter.new("mon\\={e}re", 'mc')
-  puts MacronConversions::MacronConverter.new('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
+  puts Text::LatTeX::Util::Macronconversions.convert("mon\\={e}re", 'mc')
+  puts Text::LatTeX::Util::Macronconversions.convert('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
   
   # Vanilla de-conversion
   puts MacronConversions::MacronDeConverter.new("vanilla")

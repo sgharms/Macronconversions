@@ -5,7 +5,7 @@ require 'macronconversions/macronconversions'
 
 class TestLibraryFileName < Test::Unit::TestCase
   def testLatexToMacrons
-    assert(true, "Failure message.")
-    Text::LatTeX::Util::Macronconversions::razzle()
+    assert_equal "expected", Text::LatTeX::Util::Macronconversions.convert("mon\\={e}re", 'mc')
+    assert_equal "another",  Text::LatTeX::Util::Macronconversions.convert('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
   end
 end
