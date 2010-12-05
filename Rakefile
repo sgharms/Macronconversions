@@ -11,7 +11,10 @@ Rake::RDocTask.new do |rd|
  rd.rdoc_dir = "rdoc"
 end
 
-desc 'Clear out RDoc and generated packages'
-task :clean => [:clobber_rdoc, :clobber_package] do
- rm "#{spec.name}.gemspec"
+#Added to get testing working
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/test*.rb'
+  test.verbose = true
 end
