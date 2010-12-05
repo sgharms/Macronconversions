@@ -13,8 +13,4 @@ end
 
 #Added to get testing working
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test*.rb'
-  test.verbose = true
-end
+Rake::TestTask.new(:test)
