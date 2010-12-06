@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+
+require 'macronconversions/macronconversions'
+Text::Latex::Util::Macronconversions.deconvert(ARGV.to_s)
