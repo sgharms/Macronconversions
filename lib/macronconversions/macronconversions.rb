@@ -89,15 +89,17 @@ module Text
             # fact.  This makes recurses over longer strings faster
             #
             # If it has not already been set, we derive the type heuristically
-            mode =  (! arg[0].nil?) ? 
-                arg[0] :
-                if word =~ /\&\#/
-                  :html
-                elsif word =~ /[āēīōūĀĒĪŌŪ]/
-                  :mc 
-                elsif word =~ /\\x/
-                  :utf8
-                end
+            mode =  ((! arg[0].nil?) or 
+                     (! arg[0]==:skip)) ?
+                  arg[0] 
+                :
+                  if word =~ /\&\#/
+                    :html
+                  elsif word =~ /[āēīōūĀĒĪŌŪ]/
+                    :mc 
+                  elsif word =~ /\\x/
+                    :utf8
+                  end
             
             # If the mode has not been set, we should have a plain old letter
             # otherwise you want to die since we won't be able to build a
@@ -152,7 +154,7 @@ module Text
                       deconvert(word, mode.to_sym, mutated_chart)
               else
                 # This is kinda ugly.  Particularly arg1.  
-                word.slice!(0) + deconvert(word, :mc, mutated_chart)
+                word.slice!(0) + deconvert(word, :skip, mutated_chart)
               end
 
             # Allow a block to be given to mutate the string after having been fabricated              
