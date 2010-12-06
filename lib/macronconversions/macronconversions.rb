@@ -4,12 +4,50 @@ require 'macronconversions/conversion_structure'
 module Text
   module Latex
     module Util
-      module Macronconversions    
-      class << self
+      module Macronconversions            
 
 =begin rdoc
+== Synopsis
+
+Text::Latex::Util::MacronConversions:  module providing class methods to convert
+macron (dis-)enabled strings into the opposite.
+
+== Usage
+
+ require 'require macronconversions'
+
+== Description
+
+The class provides two class methods:  +convert+ and +deconvert+  In
+the event that you need to transform LaTeX-style markep into entities of
+some sort, use the former class.  In the event that you need to down-sample
+macron-characters into LaTeX-style, use the latter.
+
+== Example Code
+
+  # Basic conversion and advanced conversion
+  puts Text::Latex::Util::Macronconversions.convert("mon\\={e}re", 'mc') #=> monēre
+
+  # Complex de-conversion
+  puts MacronConversions::MacronDeConverter.new("laudāre") #=> "laud\={a}re"
+
+  # Coup de grace
+  puts MacronConversions::MacronDeConverter.new(
+    MacronConversions::MacronConverter.new('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc').to_s)
+
+== Author     
+
+Steven G. Harms, http://www.stevengharms.com        
 
 =end
+      class << self
+          #  Deconverts a string that has macron-bearing vowels from the format to the ASCII representation used by LaTeX.
+          #  
+          #  The method is recursive and as such the 2 optional arguments are defined after the initial call.
+          #  Params:
+          #  +word+ :: (a string to convert
+          #  +from_format+ Never Directly Called:  Which format of macron should be expected?  See Macronconversions documentation
+          #  +conversion_chart+ Never Directly Called:  Which lookup table should the characters of word be tested against?
           def deconvert(word, *arg)
             return "" if word.empty?
 
@@ -73,13 +111,15 @@ module Text
             return_string
           end
 
-=begin rdoc
-
-Macronconversions::convert is the routine that scans a token for LaTeX macron
-codes, recursively. Upon the indetification of a macron-ized character, it
-passes that character to the "private" method MacronConverter#_convert_char
-
-=end                
+          # Macronconversions::convert is the routine that scans a token for LaTeX macron
+          # codes, recursively. Upon the indetification of a macron-ized character, it
+          # passes that character to the "private" method MacronConverter#_convert_char
+          # 
+          # Params:
+          # +word+ :: A string that uses the LaTeX standard for macron denotation
+          # +mode+ :: How the resultant string should be formatted (mc|utf8|html)
+          # 
+          # The resultant string may be operated upon by passing an optional block.
           def convert(word, mode=:mc, &b)
             # Ends the recurse
             return "" if word.empty?
@@ -106,8 +146,10 @@ passes that character to the "private" method MacronConverter#_convert_char
           end
           
           #####################################
-          # Sorta "private" methods
-          # (still available for unit testing, but you probably shouldn't mess with them)
+          # "Private" method
+          # (still available for unit testing, but you probably shouldn't mess with it)
+          # 
+          # Does the lookup to convert macron bearing character to LaTeX ASCII formatting 
           #####################################
           def _deconvert_char(c, chart)
             begin
@@ -120,7 +162,13 @@ passes that character to the "private" method MacronConverter#_convert_char
             end
             r
           end
-          
+
+          #####################################
+          # "Private" method
+          # (still available for unit testing, but you probably shouldn't mess with it)
+          # 
+          # Does the lookup to convert LaTeX ASCII to macron bearing character formatting
+          #####################################          
           def _convert_char(c,mode)             
             begin
               r = Text::Latex::Util::Macronconversions::CONVERSION_TABLE[c][mode]
