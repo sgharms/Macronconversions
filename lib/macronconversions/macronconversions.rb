@@ -2,7 +2,7 @@
 require 'macronconversions/conversion_structure'
 
 module Text
-  module LaTeX
+  module Latex
     module Util
       module Macronconversions    
       class << self
@@ -35,7 +35,7 @@ module Text
             # we are in a recursive call)
             mutated_chart = {}
             if arg[1].nil?
-              Text::LatTeX::Util::Macronconversions::CONVERSION_TABLE.each do |k,v|
+              Text::Latex::Util::Macronconversions::CONVERSION_TABLE.each do |k,v|
                 mutated_chart[v[mode]]=k
               end
             else
@@ -123,7 +123,7 @@ passes that character to the "private" method MacronConverter#_convert_char
           
           def _convert_char(c,mode)             
             begin
-              r = Text::LatTeX::Util::Macronconversions::CONVERSION_TABLE[c][mode]
+              r = Text::Latex::Util::Macronconversions::CONVERSION_TABLE[c][mode]
               raise if r.nil?
             rescue
               puts "_convert_char failed to find a match for [#{c}]"

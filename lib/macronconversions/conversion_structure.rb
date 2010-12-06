@@ -1,6 +1,6 @@
 # coding: utf-8
 module Text
-  module LatTeX
+  module Latex
     module Util
       module Macronconversions
         CONVERSION_TABLE = {
