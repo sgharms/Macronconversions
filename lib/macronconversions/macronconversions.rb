@@ -72,11 +72,8 @@ module Text
       # == Author     
       # 
       # Steven G. Harms, http://www.stevengharms.com        
-      
       module Macronconversions   
                  
-
-        
       class << self
           #  Deconverts a string that has macron-bearing vowels from the format to the ASCII representation used by LaTeX.
           #  
@@ -88,10 +85,10 @@ module Text
           def deconvert(word, *arg)
             return "" if word.empty?
 
-            require 'pp'
-
             # If the target has already been set, then we should respect that
             # fact.  This makes recurses over longer strings faster
+            #
+            # If it has not already been set, we derive the type heuristically
             mode =  (! arg[0].nil?) ? 
                 arg[0] :
                 if word =~ /\&\#/
@@ -103,7 +100,8 @@ module Text
                 end
             
             # If the mode has not been set, we should have a plain old letter
-            # otherwise you want to die and write a patch.
+            # otherwise you want to die since we won't be able to build a
+            # chart for a non-existant format.
             raise ArgumentError if (mode.nil? and word.slice(0) !~ /^[a-z]/)
             
             # Mutate the chart, but use the one given, if it was given (i.e.
@@ -119,9 +117,27 @@ module Text
             
             # String to which the recurse's outputs will be appended
             #
-            # All LaTeX Macron codes begin with an '=' token.  Scan for that using a 
-            # RegEx.  The value is set to firstSlash.
-            
+            # All LaTeX Macron codes begin with an '=' token.  Scan for that
+            # using a RegEx.  The value is set to firstSlash.
+            # 
+            # This is just ugly, but is nothing to be afraid of.
+            #
+            # You look to see if the character is an ampersand.  That means
+            # you've got HTML entities.  Take the ending token of the entity
+            # and hold it, and then recursively send the tail to this method
+            # to be processed again.  A cheap serialization is established by
+            # sending the logic-requiring results on to recursive invocations
+            # 
+            # The same logic applies to the second if state, we're dealing
+            # with the representation of utf-8 characters
+            #
+            # The third case varies slightly, we have a multibyte *single*
+            # character.  This character can be slice!d off and the tail
+            # recursively sent onward.
+            #
+            # Lastly, if you have a plain character, follow the same model as
+            # the preceeding.
+
             return_string = 
               if word.slice(0) == "&"
                 word =~ /(&.*?;)(.*)/
@@ -163,8 +179,10 @@ module Text
             
             # String to which the recurse's outputs will be appended
             #
-            # All LaTeX Macron codes begin with an '=' token.  Scan for that using a 
-            # RegEx.  The value is set to firstSlash.
+            # All LaTeX Macron codes begin with an '\\={' token and end with
+            # '}' Scan for that using a RegEx thus creating a match and rest. 
+            # The match is passed to _convert_char and the rest is recursed to
+            # this method.
             return_string = 
               if word.slice(0) == "\\"
                 word =~ /(\\.*?})(.*)/
