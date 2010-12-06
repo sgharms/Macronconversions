@@ -10,8 +10,9 @@ module Text
             
             return_string = ""
             if word.slice(0) == "\\"
-              word =~ /(\\.\})(.*)/
-              return_string = _convert_char($1,mode) + convert(word[(1+$1.length)..-1], mode)
+              # debugger
+              word =~ /(\\.*})(.*)/
+              return_string = _convert_char($1,mode.to_sym) + convert(word[($1.length)..-1], mode.to_sym)
             else
               return_string = word.slice(0) + convert(word[1..-1],mode)
             end

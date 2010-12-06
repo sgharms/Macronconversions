@@ -6,8 +6,9 @@ require 'macronconversions/macronconversions'
 
 class TestLibraryFileName < Test::Unit::TestCase
   def test_conversions
-    assert_equal("expected", Text::LaTeX::Util::Macronconversions.convert("expected", 'mc'))
-    # assert_equal "expected", Text::LaTeX::Util::Macronconversions.convert("mon\\={e}re", 'mc')
+    # Base case
+    # assert_equal("expected", Text::LaTeX::Util::Macronconversions.convert("expected", 'mc'))
+    assert_equal "monēre", Text::LaTeX::Util::Macronconversions.convert("mon\\={e}re", 'mc')
     # assert_equal "another",  Text::LaTeX::Util::Macronconversions.convert('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
   end                
   def test_character_conversion_mc
