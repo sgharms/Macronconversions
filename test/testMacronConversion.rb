@@ -4,7 +4,7 @@ require "test/unit"
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'macronconversions/macronconversions'
 
-class TestLibraryFileName < Test::Unit::TestCase
+class TestMacronConversion < Test::Unit::TestCase
   def test_base_with_block
     c=Text::LaTeX::Util::Macronconversions.convert("laud\\={a}re") do |s|
       s.split(//).join('*')
@@ -26,6 +26,8 @@ class TestLibraryFileName < Test::Unit::TestCase
     assert_equal "monēre", Text::LaTeX::Util::Macronconversions.convert("mon\\={e}re", 'mc')
     assert_equal "to bring up, educate: ēducō, ēducāre, ēducāvī, ēducatus; education, educator, educable",  
       Text::LaTeX::Util::Macronconversions.convert('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
+    assert_equal "laud&#x101;re",    Text::LaTeX::Util::Macronconversions.convert("laud\\={a}re"  ,:html)
+    assert_equal "laud\\xc4\\x81re", Text::LaTeX::Util::Macronconversions.convert("laud\\={a}re"  ,:utf8)
   end                
   def test_character_conversion_mc
     assert_equal "ā", Text::LaTeX::Util::Macronconversions._convert_char("\\={a}"  ,:mc)
@@ -49,7 +51,7 @@ class TestLibraryFileName < Test::Unit::TestCase
     assert_equal "&#x112;", Text::LaTeX::Util::Macronconversions._convert_char("\\={E}"  ,:html)
     assert_equal "&#x12a;", Text::LaTeX::Util::Macronconversions._convert_char("\\={\\I}",:html)
     assert_equal "&#x14c;", Text::LaTeX::Util::Macronconversions._convert_char("\\={O}"  ,:html)
-    assert_equal "&#x16a;", Text::LaTeX::Util::Macronconversions._convert_char("\\={U}"  ,:html)        
+    assert_equal "&#x16a;", Text::LaTeX::Util::Macronconversions._convert_char("\\={U}"  ,:html)  
   end
   def test_character_conversion_utf8
     assert_equal "\\xc4\\x81", Text::LaTeX::Util::Macronconversions._convert_char("\\={a}"  ,:utf8)
