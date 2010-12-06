@@ -3,6 +3,7 @@ module Text
   module Latex
     module Util
       module Macronconversions
+        # Chart used for ASCII LaTeX lookup against the formats
         CONVERSION_TABLE = {
           "\\={a}"   => 
                         {

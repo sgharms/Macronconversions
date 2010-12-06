@@ -1,11 +1,6 @@
 # coding: utf-8
 require 'macronconversions/conversion_structure'
 
-module Text
-  module Latex
-    module Util
-      module Macronconversions            
-
 =begin rdoc
 == Synopsis
 
@@ -40,6 +35,48 @@ macron-characters into LaTeX-style, use the latter.
 Steven G. Harms, http://www.stevengharms.com        
 
 =end
+# Module for manipulations on text documents
+module Text
+  # Module for working with LaTeX-formatted text
+  module Latex
+    # Utilities for generating LaTeX-formatted text
+    module Util
+      # == Synopsis
+      # 
+      # Text::Latex::Util::MacronConversions:  module providing class methods to convert
+      # macron (dis-)enabled strings into the opposite.
+      # 
+      # == Usage
+      # 
+      #  require 'require macronconversions'
+      # 
+      # == Description
+      # 
+      # The class provides two class methods:  +convert+ and +deconvert+  In
+      # the event that you need to transform LaTeX-style markep into entities of
+      # some sort, use the former class.  In the event that you need to down-sample
+      # macron-characters into LaTeX-style, use the latter.
+      # 
+      # == Example Code
+      # 
+      #   # Basic conversion and advanced conversion
+      #   puts Text::Latex::Util::Macronconversions.convert("mon\\={e}re", 'mc') #=> monēre
+      # 
+      #   # Complex de-conversion
+      #   puts MacronConversions::MacronDeConverter.new("laudāre") #=> "laud\={a}re"
+      # 
+      #   # Coup de grace
+      #   puts MacronConversions::MacronDeConverter.new(
+      #     MacronConversions::MacronConverter.new('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc').to_s)
+      # 
+      # == Author     
+      # 
+      # Steven G. Harms, http://www.stevengharms.com        
+      
+      module Macronconversions   
+                 
+
+        
       class << self
           #  Deconverts a string that has macron-bearing vowels from the format to the ASCII representation used by LaTeX.
           #  
