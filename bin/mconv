@@ -1,6 +1,16 @@
 #!/usr/bin/env ruby
-
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
-
 require 'macronconversions/macronconversions'
-Text::Latex::Util::Macronconversions.convert(ARGV.to_s)
+
+require "getopt/std"
+opt = Getopt::Std.getopts("HMU")
+
+mode = if opt["H"]
+   :html
+elsif opt["M"]
+   :mc
+elsif opt["U"]
+   :utf8
+end
+
+puts Text::Latex::Util::Macronconversions.convert(ARGV.join(''), (mode.nil? ? :mc : mode) )
