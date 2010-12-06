@@ -6,6 +6,8 @@ module Text
       module Macronconversions    
       class << self
           def convert(word, mode=:mc, *args, &b)
+            return "" if word.empty?
+            
             return_string = ""
             if word.slice(0) == "\\"
               word =~ /(\\.\})(.*)/
