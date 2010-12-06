@@ -5,9 +5,24 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'macronconversions/macronconversions'
 
 class TestLibraryFileName < Test::Unit::TestCase
+  def test_base_with_block
+    c=Text::LaTeX::Util::Macronconversions.convert("laud\\={a}re") do |s|
+      s.split(//).join('*')
+    end
+    assert_equal("l*a*u*d*ā*r*e", c)
+    c=Text::LaTeX::Util::Macronconversions.convert("laud\\={a}re") do |s|
+      s.split(//).length
+    end
+    assert_equal(7, c)
+    c=Text::LaTeX::Util::Macronconversions.convert("laud\\={a}re") do |s|
+      s.split(//)[4]
+    end
+    assert_equal("ā", c)
+  end
   def test_conversions
     # Base case
-    # assert_equal("expected", Text::LaTeX::Util::Macronconversions.convert("expected", 'mc'))
+    assert_equal "vanilla", Text::LaTeX::Util::Macronconversions.convert("vanilla")
+    assert_equal "laudāre", Text::LaTeX::Util::Macronconversions.convert("laud\\={a}re")
     assert_equal "monēre", Text::LaTeX::Util::Macronconversions.convert("mon\\={e}re", 'mc')
     assert_equal "to bring up, educate: ēducō, ēducāre, ēducāvī, ēducatus; education, educator, educable",  
       Text::LaTeX::Util::Macronconversions.convert('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
@@ -36,7 +51,7 @@ class TestLibraryFileName < Test::Unit::TestCase
     assert_equal "&#x14c;", Text::LaTeX::Util::Macronconversions._convert_char("\\={O}"  ,:html)
     assert_equal "&#x16a;", Text::LaTeX::Util::Macronconversions._convert_char("\\={U}"  ,:html)        
   end
-  def ctest_character_conversion_utf8
+  def test_character_conversion_utf8
     assert_equal "\\xc4\\x81", Text::LaTeX::Util::Macronconversions._convert_char("\\={a}"  ,:utf8)
     assert_equal "\\xc4\\x93", Text::LaTeX::Util::Macronconversions._convert_char("\\={e}"  ,:utf8)
     assert_equal "\\xc4\\xab", Text::LaTeX::Util::Macronconversions._convert_char("\\={\\i}",:utf8)
