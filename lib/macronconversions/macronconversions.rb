@@ -6,17 +6,21 @@ module Text
       module Macronconversions    
       class << self
           def convert(word, mode=:mc, *args, &b)
+            # Ends the recurse
             return "" if word.empty?
             
-            return_string = ""
-            if word.slice(0) == "\\"
-              # debugger
-              word =~ /(\\.*})(.*)/
-              return_string = _convert_char($1,mode.to_sym) + convert(word[($1.length)..-1], mode.to_sym)
-            else
-              return_string = word.slice(0) + convert(word[1..-1],mode)
-            end
-            
+            # String to which the recurse's outputs will be appended
+            return_string = 
+              # debugger 
+              if word.slice(0) == "\\"
+                word =~ /(\\.*?})(.*)/
+                return_string = _convert_char($1,mode.to_sym) + 
+                                  convert(word[($1.length)..-1], mode.to_sym)
+              else
+                return_string = word.slice(0) + convert(word[1..-1],mode)
+              end
+
+            # Allow a block to be given to mutate the string after having been fabricated
             if block_given?
               yield return_string
             else

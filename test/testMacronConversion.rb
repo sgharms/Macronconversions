@@ -9,7 +9,8 @@ class TestLibraryFileName < Test::Unit::TestCase
     # Base case
     # assert_equal("expected", Text::LaTeX::Util::Macronconversions.convert("expected", 'mc'))
     assert_equal "monēre", Text::LaTeX::Util::Macronconversions.convert("mon\\={e}re", 'mc')
-    # assert_equal "another",  Text::LaTeX::Util::Macronconversions.convert('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
+    assert_equal "to bring up, educate: ēducō, ēducāre, ēducāvī, ēducatus; education, educator, educable",  
+      Text::LaTeX::Util::Macronconversions.convert('to bring up, educate: \={e}duc\={o}, \={e}duc\={a}re, \={e}duc\={a}v\={\i}, \={e}ducatus; education, educator, educable', 'mc')
   end                
   def test_character_conversion_mc
     assert_equal "ā", Text::LaTeX::Util::Macronconversions._convert_char("\\={a}"  ,:mc)
