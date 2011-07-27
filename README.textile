@@ -20,7 +20,7 @@ Wow, there's someone else besides me?
 
 THEN Macronconversions may be the library for you!
 
-h2.  Macronconversions lets you convert easily between ASCII and funnt mulitbyte representations
+h2.  Macronconversions lets you convert easily between ASCII and funny mulitbyte representations
 
 <pre>
 $ mconv -M  "laud\={a}re" 
@@ -56,8 +56,3 @@ Stable
 h2.  Ridiculee-in-chief
 
 "Steven G. Harms":http://stevengharms.com
-
-h2.  Horrible Typos
-
-I'm currently relearning QWERTY from 10 years of Dvorak.  I should be getting better real soon now.
-
