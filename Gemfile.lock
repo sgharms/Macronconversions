@@ -2,10 +2,14 @@ PATH
   remote: .
   specs:
     macronconversions (1.0.0)
+      multi_json (~> 1.8)
+      rake
 
 GEM
   remote: http://rubygems.org/
   specs:
+    multi_json (1.10.1)
+    rake (10.3.2)
 
 PLATFORMS
   ruby
