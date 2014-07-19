@@ -20,4 +20,8 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  # Environmental requirements
+  s.add_runtime_dependency("rake")
+  s.add_runtime_dependency("multi_json", "~>1.8")
 end
